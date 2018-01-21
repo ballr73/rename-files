@@ -3,23 +3,37 @@ using System.IO;
 
 namespace rename_files
 {
+    
     class Program
     {
         static void Main(string[] args)
         {
-            if(args.Length!= 3) {
+            if(args.Length!= 4) {
                 Console.Write("Invalid Arguments");
                 return;
             }
-            var folder = args[0];
-            var source = args[1];
-            var target = args[2];
-            var files = Directory.GetFiles(folder, "*.*", SearchOption.AllDirectories);
+            var folder = args[0]; // folder
+            var target = args[1]; // 
+            var destination = args[2];
+            var pattern = args[3];
+
+            var files = Directory.GetFiles(folder, pattern, SearchOption.AllDirectories);
             foreach(var file in files) 
             {
-                var output = file.Replace(source, target);
-                Console.WriteLine(string.Format("{0} -> {1}", file, output));
-                File.Copy(file, output);
+                if(file.Contains(target))
+                {
+                    var output = file.Replace(target, destination);
+                    Console.WriteLine(string.Format("{0} -> {1}", file, output));
+                    try
+                    {
+                        File.Copy(file, output);
+                    }
+                    catch
+                    {
+                        Console.WriteLine("{0} skipped", file);
+                    }
+                    
+                }
             }
 
             Console.WriteLine("Please any key to exit.");
