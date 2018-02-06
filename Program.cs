@@ -9,7 +9,9 @@ namespace rename_files
         static void Main(string[] args)
         {
             if(args.Length!= 4) {
-                Console.Write("Invalid Arguments");
+                Console.WriteLine("Invalid Arguments");
+                Console.WriteLine("Usage: rename-files <folder> <target> <desination> <pattern>");
+                Console.WriteLine("i.e. rename-files /files javascript typescript *.png");
                 return;
             }
             var folder = args[0]; // folder
